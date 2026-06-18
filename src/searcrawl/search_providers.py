@@ -74,7 +74,7 @@ class SearXNGSearchProvider:
         client = self.client or httpx.AsyncClient(timeout=httpx.Timeout(SEARXNG_TIMEOUT_SECONDS))
         started = time.perf_counter()
         try:
-           params = {
+            params = {
                 "q": request.query,
                 "format": "json",
                 "language": SEARCH_LANGUAGE,
