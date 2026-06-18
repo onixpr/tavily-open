@@ -19,7 +19,8 @@ logger.info("Loading environment variable configuration")
 SEARXNG_HOST = os.getenv("SEARXNG_HOST", "localhost")
 SEARXNG_PORT = int(os.getenv("SEARXNG_PORT", "8080"))
 SEARXNG_BASE_PATH = os.getenv("SEARXNG_BASE_PATH", "/search")
-SEARXNG_API_BASE = f"http://{SEARXNG_HOST}:{SEARXNG_PORT}{SEARXNG_BASE_PATH}"
+SEARXNG_PROTOCOL = os.getenv("SEARXNG_PROTOCOL", "http")
+SEARXNG_API_BASE = f"{SEARXNG_PROTOCOL}://{SEARXNG_HOST}:{SEARXNG_PORT}{SEARXNG_BASE_PATH}"
 
 # API Service Configuration
 API_HOST = os.getenv("API_HOST", "0.0.0.0")
