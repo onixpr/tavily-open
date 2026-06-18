@@ -13,6 +13,8 @@ import uvicorn
 from fastapi import FastAPI, HTTPException
 from loguru import logger
 from pydantic import BaseModel
+from fastapi import Depends, HTTPException, Security
+from fastapi.security import APIKeyHeader
 
 import searcrawl.logger as log_module
 from searcrawl.cache import CacheManager
@@ -37,6 +39,15 @@ from searcrawl.config import (
 )
 from searcrawl.crawler import WebCrawler
 from searcrawl.search_providers import SearchProviderRequest, create_search_provider
+
+from searcrawl.config import API_KEY
+
+api_key_header = APIKeyHeader(name="X-API-Key", auto_error=False)
+
+async def verify_api_key(key: str = Security(api_key_header)):
+    if API_KEY and key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
 
 cache_manager: Optional[CacheManager] = None
 search_client: Optional[httpx.AsyncClient] = None
@@ -297,7 +308,7 @@ async def clear_cache():
 
 
 @app.post("/search")
-async def search(request: SearchRequest):
+async def search(request: SearchRequest, _=Depends(verify_api_key)):
     """
     Search API endpoint
 
