@@ -74,7 +74,7 @@ class SearXNGSearchProvider:
         client = self.client or httpx.AsyncClient(timeout=httpx.Timeout(SEARXNG_TIMEOUT_SECONDS))
         started = time.perf_counter()
         try:
-            params = {
+            form_data = {
                 "q": request.query,
                 "format": "json",
                 "language": SEARCH_LANGUAGE,
@@ -84,10 +84,10 @@ class SearXNGSearchProvider:
                 "category_general": "1",
             }
             headers = {
-                "User-Agent": "Sear-Crawl4AI/1.0.0",
+                "User-Agent": "Mozilla/5.0",
                 "Accept": "application/json",
             }
-            response = await client.get(SEARXNG_API_BASE, params=params, headers=headers)
+            response = await client.post(SEARXNG_API_BASE, data=form_data, headers=headers)
             response.raise_for_status()
             payload = response.json()
             hits = [
