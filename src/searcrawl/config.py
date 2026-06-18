@@ -21,6 +21,7 @@ SEARXNG_PORT = int(os.getenv("SEARXNG_PORT", "8080"))
 SEARXNG_BASE_PATH = os.getenv("SEARXNG_BASE_PATH", "/search")
 SEARXNG_PROTOCOL = os.getenv("SEARXNG_PROTOCOL", "http")
 SEARXNG_API_BASE = f"{SEARXNG_PROTOCOL}://{SEARXNG_HOST}:{SEARXNG_PORT}{SEARXNG_BASE_PATH}"
+API_KEY = os.getenv("API_KEY", "")
 logger.info(f"SearXNG API base URL: {SEARXNG_API_BASE}")
 
 # API Service Configuration
